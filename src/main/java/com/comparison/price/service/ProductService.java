@@ -42,16 +42,12 @@ public class ProductService {
     }
 
     private ProductsDTO getData() {
-        ProductsDTO products = new ProductsDTO();
-        products.setProducts(
-            Arrays.asList(
-                new ProductDTO("Headphones", Arrays.asList("Binglee", "DXC Electronics", "Bobay")),
-                new ProductDTO("Laptop", Arrays.asList("GH Computers", "Tech city", "Ez PC")),
-                new ProductDTO("Mouse", Arrays.asList("DXC Electronics", "Tech City")),
-                new ProductDTO("Printer", Arrays.asList("Binglee", "DXC Electronics", "Bobay", "GH Computers"))
-            ));
-
-        return products;
+        try {
+            String productsJson = JsonReader.readJsonFromClasspath("json/products.json");
+            return objectMapper.readValue(productsJson, ProductsDTO.class);
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 }
